@@ -8,6 +8,20 @@
 #include "proc.h"
 
 int
+sys_count_num_of_digits(void)
+{
+  int num;
+  asm volatile("movl %%esi, %0" : "=r" (num));
+  int count = 0;
+  while(num > 0) {
+    num /= 10;
+    count ++;
+  }
+  cprintf("number of digits is = %d\n", count);
+  return 1;
+}
+
+int
 sys_fork(void)
 {
   return fork();
