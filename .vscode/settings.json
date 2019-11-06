@@ -2,6 +2,8 @@
     "files.associations": {
         "proc.h": "c",
         "user.h": "c",
-        "types.h": "c"
+        "types.h": "c",
+        "date.h": "c",
+        "defs.h": "c"
     }
 }

@@ -6,8 +6,29 @@
 #include "memlayout.h"
 #include "mmu.h"
 #include "proc.h"
-
 #include "path.h"
+
+int
+sys_proc_sleep(void)
+{
+  struct proc *curproc = myproc();
+  int sleep_finish_time;
+  argint(0, &sleep_finish_time);
+  cprintf("sleep_finish_time: %d\n", sleep_finish_time); 
+  curproc->sleep_finish_time = sleep_finish_time;
+  cprintf("after_sleep_finish_time: %d\n", curproc->sleep_finish_time);
+  curproc->state = SLEEPING;
+  cprintf("state after = %d\n", curproc->state);
+  return 1;
+}
+
+int
+sys_get_time(void)
+{
+  struct rtcdate cur_time;
+  cmostime(&cur_time);
+  return cur_time.second + cur_time.minute * 60;
+}
 
 int
 sys_set_path(void)

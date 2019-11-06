@@ -25,6 +25,8 @@ int sleep(int);
 int uptime(void);
 int count_num_of_digits(int);
 int set_path(const char*);
+int proc_sleep(int);
+int get_time(void);
 
 // ulib.c
 int stat(const char*, struct stat*);
