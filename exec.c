@@ -9,8 +9,6 @@
 
 #include "path.h"
 
-
-
 int
 exec(char *path, char **argv)
 {
@@ -22,18 +20,45 @@ exec(char *path, char **argv)
   struct proghdr ph;
   pde_t *pgdir, *oldpgdir;
   struct proc *curproc = myproc();
+  int found = 0;
 
   begin_op();
 
   if((ip = namei(path)) == 0){
-    end_op();
-    cprintf("exec: fail\n");
-    return -1;
+    int i;
+    for(i=0; i<MAX_DIRS; i++)
+    {
+      if(found)
+        break;
+      
+      memset(buffer_path, 0, sizeof(char) * MAX_PATH_LENGTH * 2);
+      int n;
+
+      for(n=0; n<strlen(path_list[i]); n++)
+        buffer_path[n] = path_list[i][n];
+
+      buffer_path[n] = '\0';
+      for(n=0; n<strlen(path); n++) {
+        buffer_path[strlen(path_list[i])+n] = path[n];
+      }
+      buffer_path[strlen(path_list[i])+n] = '\0';
+      if((ip = namei(buffer_path)) != 0)
+      {
+        path = buffer_path;
+        found = 1;
+      }
+    }
+
+    if(!found)
+    {
+      end_op();
+      cprintf("exec: fail\n");
+      return -1;
+    }
   }
   ilock(ip);
   pgdir = 0;
 
-  // Check ELF header
   if(readi(ip, (char*)&elf, 0, sizeof(elf)) != sizeof(elf))
     goto bad;
   if(elf.magic != ELF_MAGIC)

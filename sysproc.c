@@ -6,6 +6,7 @@
 #include "memlayout.h"
 #include "mmu.h"
 #include "proc.h"
+
 #include "path.h"
 
 int
@@ -39,9 +40,9 @@ sys_set_path(void)
       }
     }
   }
-  // for(i=0; i<MAX_DIRS; i++) {
-  //   cprintf("str %d %s\n", i, path_list[i]);
-  // }
+  for(i=0; i<MAX_DIRS; i++) {
+    cprintf("str %d %s\n", i, path_list[i]);
+  }
   return 1;
 }
 
