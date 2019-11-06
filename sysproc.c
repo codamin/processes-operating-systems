@@ -6,6 +6,44 @@
 #include "memlayout.h"
 #include "mmu.h"
 #include "proc.h"
+#include "path.h"
+
+int
+sys_set_path(void)
+{
+  char* in_dirs;
+
+
+  if(argstr(0, &in_dirs) < 0)
+    return -1;
+
+  memset(path_list, 0, MAX_DIRS * MAX_PATH_LENGTH);
+  int cur_dir=0;
+  int cur_pos=0;
+
+  int i;
+  for(i=0; i<strlen(in_dirs); i++)
+  {
+    if(in_dirs[i] == ':')
+    {
+      path_list[cur_dir][cur_pos] = '\0';
+      cur_pos = 0;
+      cur_dir++;
+    }
+    else
+    {
+      if(cur_pos < MAX_PATH_LENGTH - 1)
+      {
+        path_list[cur_dir][cur_pos] = in_dirs[i];
+        cur_pos++;
+      }
+    }
+  }
+  // for(i=0; i<MAX_DIRS; i++) {
+  //   cprintf("str %d %s\n", i, path_list[i]);
+  // }
+  return 1;
+}
 
 int
 sys_count_num_of_digits(void)

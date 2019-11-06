@@ -7,6 +7,10 @@
 #include "x86.h"
 #include "elf.h"
 
+#include "path.h"
+
+
+
 int
 exec(char *path, char **argv)
 {
