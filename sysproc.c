@@ -8,17 +8,22 @@
 #include "proc.h"
 #include "path.h"
 
+#define CLOCKS_PER_SEC 84
+
 int
 sys_proc_sleep(void)
 {
-  struct proc *curproc = myproc();
-  int sleep_finish_time;
-  argint(0, &sleep_finish_time);
-  cprintf("sleep_finish_time: %d\n", sleep_finish_time); 
-  curproc->sleep_finish_time = sleep_finish_time;
-  cprintf("after_sleep_finish_time: %d\n", curproc->sleep_finish_time);
-  curproc->state = SLEEPING;
-  cprintf("state after = %d\n", curproc->state);
+  int sleep_time;
+  argint(0, &sleep_time);
+  uint ticks0;
+  ticks0 = ticks;
+  int etime;
+  while((etime = (ticks - ticks0)) < (sleep_time * CLOCKS_PER_SEC))
+  {
+    sti();
+    // cprintf("elapsed time = %d\n", etime);
+  }
+  cprintf("finished\n");
   return 1;
 }
 
@@ -34,8 +39,6 @@ int
 sys_set_path(void)
 {
   char* in_dirs;
-
-
   if(argstr(0, &in_dirs) < 0)
     return -1;
 

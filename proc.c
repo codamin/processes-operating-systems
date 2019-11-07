@@ -336,18 +336,7 @@ scheduler(void)
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
       if(p->state != RUNNABLE)
         continue;
-      
-      struct rtcdate t;
-      cmostime(&t);
-      uint cur_time = t.second + t.minute * 60;
-      cprintf("state before if = %d\n", p->state);
-      if(p->state == SLEEPING) {
-        cprintf("cur time is : %d but finish_time is %d \n", cur_time, p->sleep_finish_time);
-        if(p->sleep_finish_time < cur_time)
-        {
-          p->state = RUNNABLE;
-        }
-      }
+        
       // Switch to chosen process.  It is the process's job
       // to release ptable.lock and then reacquire it
       // before jumping back to us.
