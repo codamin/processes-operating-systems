@@ -21,6 +21,45 @@ extern void trapret(void);
 
 static void wakeup1(void *chan);
 
+int
+append(int result, int a)
+{
+  int aa = a;
+  int len = 0;
+  while (aa != 0) {
+    len++;
+    aa /= 10;
+  }
+  while (len > 0) {
+    result *= 10;
+    len--;
+  }
+  return result += a;
+}
+
+int
+gchildren_by_pid(int pid)
+{
+  struct proc *p;
+  int result = 0;
+  for(p = ptable.proc; p < &ptable.proc[NPROC]; p++) {
+    if(p->parent->pid == pid) {
+      result = append(result, p->pid);
+      result = append(result, gchildren_by_pid(p->pid)); // preferential
+    }
+  }
+  return result;
+}
+
+int
+gchildren(void)
+{
+  int pid;
+  if(argint(0, &pid) < 0)
+    return -1;
+  return gchildren_by_pid(pid);
+}
+
 void
 pinit(void)
 {

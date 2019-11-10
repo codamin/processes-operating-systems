@@ -27,6 +27,8 @@ int count_num_of_digits(int);
 int set_path(const char*);
 int proc_sleep(int);
 int get_time(void);
+int get_parent_id(void);
+int get_children(int);
 
 // ulib.c
 int stat(const char*, struct stat*);
@@ -41,3 +43,4 @@ void* memset(void*, int, uint);
 void* malloc(uint);
 void free(void*);
 int atoi(const char*);
+void printi(int);

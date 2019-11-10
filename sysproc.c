@@ -11,6 +11,18 @@
 #define CLOCKS_PER_SEC 84
 
 int
+sys_get_children(void)
+{
+  return gchildren();
+}
+
+int
+sys_get_parent_id(void)
+{
+  return myproc()->parent->pid;
+}
+
+int
 sys_proc_sleep(void)
 {
   int sleep_time;

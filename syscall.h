@@ -24,3 +24,5 @@
 #define SYS_set_path 23
 #define SYS_proc_sleep 24
 #define SYS_get_time 25
+#define SYS_get_parent_id 23
+#define SYS_get_children 24

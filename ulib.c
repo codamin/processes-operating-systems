@@ -92,6 +92,23 @@ atoi(const char *s)
   return n;
 }
 
+void
+printi(int integer) {
+	uint len = 1;
+	unsigned int copy = integer;
+	while(copy/10 > 0) {
+		len++;
+		copy /= 10;
+	}
+	char str[len];
+	int i;
+	for(i = 0; i < len; i++) {
+		str[len-i-1] = (integer % 10) + '0';
+		integer /= 10;
+	}
+	write(1, str, sizeof(str));
+}
+
 void*
 memmove(void *vdst, const void *vsrc, int n)
 {
