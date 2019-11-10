@@ -19,11 +19,8 @@ sys_proc_sleep(void)
   ticks0 = ticks;
   int etime;
   while((etime = (ticks - ticks0)) < (sleep_time * CLOCKS_PER_SEC))
-  {
     sti();
-    // cprintf("elapsed time = %d\n", etime);
-  }
-  cprintf("finished\n");
+  cprintf("sleeping finished\n");
   return 1;
 }
 
@@ -63,9 +60,6 @@ sys_set_path(void)
         cur_pos++;
       }
     }
-  }
-  for(i=0; i<MAX_DIRS; i++) {
-    cprintf("str %d %s\n", i, path_list[i]);
   }
   return 1;
 }

@@ -4,6 +4,7 @@
         "user.h": "c",
         "types.h": "c",
         "date.h": "c",
-        "defs.h": "c"
+        "defs.h": "c",
+        "x86.h": "c"
     }
 }
